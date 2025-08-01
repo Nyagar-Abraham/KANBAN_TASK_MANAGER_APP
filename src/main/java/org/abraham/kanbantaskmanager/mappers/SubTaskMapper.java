@@ -1,0 +1,15 @@
+package org.abraham.kanbantaskmanager.mappers;
+
+
+import org.abraham.kanbantaskmanager.dtos.SubTaskResponse;
+import org.abraham.kanbantaskmanager.entities.SubTask;
+
+public class SubTaskMapper {
+    public static SubTaskResponse toDto(SubTask subTask) {
+        var response = new SubTaskResponse();
+        response.setId(subTask.getId());
+        response.setTitle(subTask.getTitle());
+        response.setIsCompleted(subTask.getIsCompleted());
+        return response;
+    }
+}

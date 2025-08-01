@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: kanban-task-manager
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kanbandb
+    password: pass747word
+    username: kanbanuser
+
+
+  #  datasource:
+#    url: ${POSTGRES_URL}
+#    password: ${POSTGRES_PASSWORD}
+#    username: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+server:
+  port: 8085
+
+
+
+
+

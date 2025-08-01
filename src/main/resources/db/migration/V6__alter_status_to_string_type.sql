@@ -1,0 +1,9 @@
+
+ALTER TABLE tasks
+    ALTER COLUMN status TYPE VARCHAR(20)
+        USING status::text;
+
+DROP TYPE IF EXISTS status_enum CASCADE;
+
+ALTER TABLE tasks
+    ALTER COLUMN status SET DEFAULT 'TODO';
