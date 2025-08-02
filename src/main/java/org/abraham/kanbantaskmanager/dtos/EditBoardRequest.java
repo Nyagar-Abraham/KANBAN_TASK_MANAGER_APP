@@ -4,12 +4,13 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-public class CreateBoardRequest {
+public class EditBoardRequest {
     @NotBlank(message = "Name is required!")
     private String name;
-    private List<TaskStatusAndColumnName> columns =  new ArrayList<>();
+    private Set<TaskStatusAndColumnName> columns =  new HashSet<>();
 }

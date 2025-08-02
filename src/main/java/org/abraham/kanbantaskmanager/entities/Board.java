@@ -19,18 +19,16 @@ public class Board {
     @Column(nullable = false,name = "name",unique = true )
     private String name;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "board_column_join",
             joinColumns = @JoinColumn(name = "board_id"),
             inverseJoinColumns = @JoinColumn(name = "column_id")
     )
-
     private Set<BoardColumn> columns = new HashSet<>();
 
     public void addColumn(BoardColumn column) {
         columns.add(column);
-
     }
 
     public void removeColumn(BoardColumn column) {

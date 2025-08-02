@@ -1,6 +1,6 @@
 package org.abraham.kanbantaskmanager.entities;
 
-public enum Status {
+public enum TaskStatusAndColumnName {
     TODO,
     DOING,
     DONE

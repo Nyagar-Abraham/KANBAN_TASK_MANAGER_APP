@@ -1,13 +1,13 @@
 package org.abraham.kanbantaskmanager.mappers;
 
-import org.abraham.kanbantaskmanager.dtos.CreateTaskResponse;
+import org.abraham.kanbantaskmanager.dtos.TaskResponse;
 import org.abraham.kanbantaskmanager.entities.Task;
 
 import java.util.stream.Collectors;
 
 public class TaskMapper {
-    public static CreateTaskResponse toDto(Task task) {
-        CreateTaskResponse dto = new CreateTaskResponse();
+    public static TaskResponse toDto(Task task) {
+        TaskResponse dto = new TaskResponse();
         dto.setId(task.getId());
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());

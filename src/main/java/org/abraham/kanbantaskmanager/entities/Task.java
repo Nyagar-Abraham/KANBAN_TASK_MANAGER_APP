@@ -26,7 +26,7 @@ public class Task {
 
     @Column(nullable = false,name = "status")
 //    @Enumerated(EnumType.STRING)
-    private Status status;
+    private TaskStatusAndColumnName status;
 
     @ManyToOne
     @JoinColumn(
@@ -34,10 +34,10 @@ public class Task {
     )
     private BoardColumn boardColumn;
 
-    @OneToMany(mappedBy = "task",  cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "task",  cascade = {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private Set<SubTask> subTasks = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "board_id"
     )

@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class CreateTaskRequest {
+public class EditTaskRequest {
     @NotNull
-    private Long boardId;
+    private String taskId;
     @NotBlank(message = "title is required")
     private String title;
     private String description;

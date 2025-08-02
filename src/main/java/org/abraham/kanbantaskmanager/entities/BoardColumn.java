@@ -3,7 +3,6 @@ package org.abraham.kanbantaskmanager.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,9 +17,10 @@ public class BoardColumn {
     private Long id;
 
     @Column(nullable = false, name = "name",unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private TaskStatusAndColumnName name;
 
-    @OneToMany(mappedBy = "boardColumn", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "boardColumn", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Task> tasks = new HashSet<>();
 
     public void addTask(Task task) {
