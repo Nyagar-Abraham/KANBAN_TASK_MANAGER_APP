@@ -27,6 +27,12 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/{task_id}")
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable(name = "task_id") Long taskId) {
+      var task =  taskService.getTaskById(taskId);
+      return ResponseEntity.ok(task);
+    }
+
     @PostMapping()
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody CreateTaskRequest request , UriComponentsBuilder uriBuilder) {
         var task = taskService.createTask(request);

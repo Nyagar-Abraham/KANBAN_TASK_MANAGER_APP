@@ -10,8 +10,6 @@ import java.util.Set;
 
 @Data
 public class EditTaskRequest {
-    @NotNull
-    private String taskId;
     @NotBlank(message = "title is required")
     private String title;
     private String description;

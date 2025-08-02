@@ -24,6 +24,12 @@ public class BoardController {
         return ResponseEntity.ok(boards);
     }
 
+    @GetMapping("/{board_id}")
+    public ResponseEntity<BoardResponse> getBoardById(@PathVariable(name = "board_id") Long boardId) {
+       var board=  boardService.getBoardById(boardId);
+       return ResponseEntity.ok(board);
+    }
+
     @PostMapping()
     public ResponseEntity<BoardResponse> createBoard(@Valid @RequestBody CreateBoardRequest createBoardRequest, UriComponentsBuilder uriBuilder) {
        var board =  boardService.createBoard(createBoardRequest);

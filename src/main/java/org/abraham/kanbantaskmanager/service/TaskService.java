@@ -9,10 +9,7 @@ import org.abraham.kanbantaskmanager.dtos.CreateTaskRequest;
 import org.abraham.kanbantaskmanager.dtos.EditTaskColumnRequest;
 import org.abraham.kanbantaskmanager.dtos.EditTaskRequest;
 import org.abraham.kanbantaskmanager.dtos.TaskResponse;
-import org.abraham.kanbantaskmanager.entities.BoardColumn;
-import org.abraham.kanbantaskmanager.entities.SubTask;
-import org.abraham.kanbantaskmanager.entities.Task;
-import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
+import org.abraham.kanbantaskmanager.entities.*;
 import org.abraham.kanbantaskmanager.mappers.TaskMapper;
 import org.abraham.kanbantaskmanager.repository.BoardColumnRepository;
 import org.abraham.kanbantaskmanager.repository.BoardRepository;
@@ -44,21 +41,26 @@ public class TaskService {
         return taskRepository.findAll().stream().map(TaskMapper::toDto).collect(Collectors.toList());
     }
 
+    @Transactional
     public TaskResponse createTask(CreateTaskRequest request) {
         var board = boardRepository.findById(request.getBoardId()).orElseThrow(() -> new EntityNotFoundException("Board", request.getBoardId().toString()));
-        BoardColumn column = boardColumnRepository.findByName(request.getStatus()).orElse(null);
 
         var task = new Task();
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         task.setStatus(request.getStatus());
 
-        request.getSubtasks().forEach(subtask -> {
-            var newSubtask = new SubTask();
-            newSubtask.setTitle(subtask);
-            task.addSubTask(newSubtask);
-        });
+        addSubTasks(request, task);
+        addTaskToOrCreateColumnIfNotExist(request, task, board);
 
+        task.addBoard(board);
+        boardRepository.save(board);
+        var persisted = taskRepository.findByTitleAndBoardId(task.getTitle(), board.getId()).orElseThrow();
+        return TaskMapper.toDto(persisted);
+    }
+
+    private void addTaskToOrCreateColumnIfNotExist(CreateTaskRequest request, Task task, Board board) {
+        BoardColumn column = boardColumnRepository.findByName(request.getStatus()).orElse(null);
         if (column != null) {
             column.addTask(task);
         } else {
@@ -67,11 +69,14 @@ public class TaskService {
             board.addColumn(column);
             column.addTask(task);
         }
+    }
 
-        task.addBoard(board);
-        boardRepository.save(board);
-        var saved_task = taskRepository.save(task);
-        return TaskMapper.toDto(saved_task);
+    private static void addSubTasks(CreateTaskRequest request, Task task) {
+        request.getSubtasks().forEach(subtask -> {
+            var newSubtask = new SubTask();
+            newSubtask.setTitle(subtask);
+            task.addSubTask(newSubtask);
+        });
     }
 
     @Transactional
@@ -131,4 +136,8 @@ public class TaskService {
         }
     }
 
+    public TaskResponse getTaskById(Long taskId) {
+        var task = taskRepository.findById(taskId).orElseThrow();
+        return TaskMapper.toDto(task);
+    }
 }
