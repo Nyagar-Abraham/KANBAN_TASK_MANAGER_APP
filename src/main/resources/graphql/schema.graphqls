@@ -1,0 +1,70 @@
+type Query{
+    getAllBoards:[BoardResponse!]!
+    getBoardById(board_id:ID!):BoardResponse!
+
+    getAllTasks:[TaskResponse!]!
+    getTaskById(task_id:ID!):TaskResponse!
+}
+
+type Mutation{
+    createBoard(board:CreateBoardRequest!):BoardResponse!
+    updateBoardName(board_id:ID!,name: String!):BoardResponse!
+    updateBoardColumns(board_id:ID!,columns:[TaskStatusAndColumnName!]!):BoardResponse
+    deleteBoardById(board_id:ID!): ID!
+
+    createTask(task:CreateTaskRequest!):TaskResponse!
+    updateTaskTitle(task_id:ID!,title:String!):TaskResponse!
+    updateTaskDescription(task_id:ID!,description:String!):TaskResponse!
+    updateTaskColumn(task_id:ID!,column:TaskStatusAndColumnName!):TaskResponse!
+    updateTaskSubtasks(task_id:ID!,subtasks:[String!]!):TaskResponse!
+    toggleSubtaskStatus(subtask_id:ID!):SubTaskResponse!
+    deleteTaskById(task_id:ID!):ID!
+}
+
+input CreateBoardRequest{
+    name:String!
+    columns:[TaskStatusAndColumnName]
+}
+
+input CreateTaskRequest{
+    boardId:ID!
+    title:String!
+    description:String
+    status:TaskStatusAndColumnName!
+    subtasks:[String!]!
+}
+
+enum TaskStatusAndColumnName{
+    TODO
+    DOING
+    DONE
+}
+
+type BoardResponse{
+    id:ID!
+    name:String!
+    columns:[BoardColumnResponse]
+}
+
+type BoardColumnResponse{
+    id: ID!
+    name: String!
+}
+
+
+type TaskResponse{
+    id: ID!
+    title: String!
+    description:String
+    status:TaskStatusAndColumnName!
+    subtasks:[SubTaskResponse!]!
+}
+
+type SubTaskResponse{
+    id:ID!
+    title:String!
+    isCompleted:Boolean!
+}
+
+
+

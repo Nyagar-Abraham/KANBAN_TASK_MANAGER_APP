@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.controller;
+package org.abraham.kanbantaskmanager.restcontroller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,8 +43,8 @@ public class BoardController {
         return ResponseEntity.ok(board);
     }
 
-    @DeleteMapping("/{boerd_id}")
-    public ResponseEntity<?> deleteBoard(@PathVariable(name = "boerd_id") Long boardId) {
+    @DeleteMapping("/{board_id}")
+    public ResponseEntity<?> deleteBoard(@PathVariable(name = "board_id") Long boardId) {
         boardService.deleteBoard(boardId);
         return ResponseEntity.noContent().build();
     }

@@ -11,5 +11,4 @@ public class KanbanTaskManagerApplication {
         SpringApplication.run(KanbanTaskManagerApplication.class, args);
     }
 
-
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 public class CreateTaskRequest {
-    @NotNull
+    @NotNull(message = "boardId is required")
     private Long boardId;
     @NotBlank(message = "title is required")
     private String title;

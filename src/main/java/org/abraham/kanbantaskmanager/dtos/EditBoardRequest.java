@@ -1,6 +1,7 @@
 package org.abraham.kanbantaskmanager.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 

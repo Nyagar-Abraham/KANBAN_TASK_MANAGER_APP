@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.controller;
+package org.abraham.kanbantaskmanager.restcontroller;
 
 import org.abraham.kanbantaskmanager.Exceptions.DuplicateNameException;
 import org.abraham.kanbantaskmanager.Exceptions.EntityNotFoundException;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
         var error = new Error();
         error.setMessage(ex.getMessage());
         error.setCode(HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateNameException.class)

@@ -44,6 +44,20 @@ public class BoardService {
          return BoardMapper.toDto(board);
     }
 
+    public BoardResponse updateBoardName(Long board_id, String name) {
+        var board = boardRepository.findById(board_id).orElseThrow(() -> new EntityNotFoundException("Board", board_id.toString()));
+        board.setName(name);
+        boardRepository.save(board);
+        return BoardMapper.toDto(board);
+    }
+
+    public BoardResponse updateBoardColumns(Long board_id, Set<TaskStatusAndColumnName> columns) {
+        var board = boardRepository.findById(board_id).orElseThrow(() -> new EntityNotFoundException("Board", board_id.toString()));
+        addAndRemoveNecessaryColumns(columns,board);
+        boardRepository.save(board);
+        return BoardMapper.toDto(board);
+    }
+
     @Transactional
     public BoardResponse updateBoard(EditBoardRequest request, Long boardId) {
         var board = boardRepository.findById(boardId).orElseThrow(() -> new EntityNotFoundException("Board",boardId.toString()));
@@ -56,6 +70,7 @@ public class BoardService {
     }
 
     public void deleteBoard(Long boardId) {
+        boardRepository.findById(boardId).orElseThrow(() -> new EntityNotFoundException("Board",boardId.toString()));
         boardRepository.deleteById(boardId);
     }
 
@@ -101,4 +116,7 @@ public class BoardService {
         var board = boardRepository.findById(boardId).orElseThrow();
         return BoardMapper.toDto(board);
     }
+
+
+
 }

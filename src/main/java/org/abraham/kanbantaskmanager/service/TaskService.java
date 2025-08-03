@@ -5,11 +5,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abraham.kanbantaskmanager.Exceptions.EntityNotFoundException;
-import org.abraham.kanbantaskmanager.dtos.CreateTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.EditTaskColumnRequest;
-import org.abraham.kanbantaskmanager.dtos.EditTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.TaskResponse;
+import org.abraham.kanbantaskmanager.dtos.*;
 import org.abraham.kanbantaskmanager.entities.*;
+import org.abraham.kanbantaskmanager.mappers.SubTaskMapper;
 import org.abraham.kanbantaskmanager.mappers.TaskMapper;
 import org.abraham.kanbantaskmanager.repository.BoardColumnRepository;
 import org.abraham.kanbantaskmanager.repository.BoardRepository;
@@ -31,14 +29,20 @@ public class TaskService {
     private TaskRepository taskRepository;
     private BoardRepository boardRepository;
 
-    public void toggleSubtaskStatus(Long subTaskId){
+    public SubTaskResponse toggleSubtaskStatus(Long subTaskId){
         var subtask = subTaskRepository.findById(subTaskId).orElseThrow(() -> new EntityNotFoundException("SubTask", subTaskId.toString()));
         subtask.setIsCompleted(!subtask.getIsCompleted());
         subTaskRepository.save(subtask);
+        return SubTaskMapper.toDto(subtask);
     }
 
     public List<TaskResponse> getTasks() {
         return taskRepository.findAll().stream().map(TaskMapper::toDto).collect(Collectors.toList());
+    }
+
+    public TaskResponse getTaskById(Long taskId) {
+        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
+        return TaskMapper.toDto(task);
     }
 
     @Transactional
@@ -58,6 +62,57 @@ public class TaskService {
         var persisted = taskRepository.findByTitleAndBoardId(task.getTitle(), board.getId()).orElseThrow();
         return TaskMapper.toDto(persisted);
     }
+
+    public TaskResponse updateTaskTitle(Long task_id, String title) {
+        var task =taskRepository.findById(task_id).orElseThrow(() -> new EntityNotFoundException("Task", task_id.toString()));
+        task.setTitle(title);
+        taskRepository.save(task);
+        return TaskMapper.toDto(task);
+    }
+
+    public TaskResponse updateTaskDescription(Long taskId, String description) {
+        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
+        task.setDescription(description);
+        taskRepository.save(task);
+        return TaskMapper.toDto(task);
+    }
+
+    public TaskResponse updateTaskSubtasks(Long taskId, Set<String> subtasks) {
+        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
+        addAndRemoveSubtasks(subtasks, task);
+        taskRepository.save(task);
+        return TaskMapper.toDto(task);
+    }
+
+
+    @Transactional
+    public TaskResponse updateTask(EditTaskRequest request, Long taskId) {
+        var dbTask = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
+        dbTask.setTitle(request.getTitle());
+        dbTask.setDescription(request.getDescription());
+        dbTask.setStatus(request.getStatus());
+
+        addAndRemoveSubtasks(request.getSubtasks(), dbTask);
+        switchTaskColumn(request.getStatus(), dbTask);
+
+        var task = taskRepository.save(dbTask);
+        return TaskMapper.toDto(task);
+    }
+
+    @Transactional
+    public void updateTaskColumn(@Valid EditTaskColumnRequest request, Long taskId) {
+        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task",taskId.toString()));
+        task.setStatus(request.getStatus());
+        switchTaskColumn(request.getStatus(),task);
+    }
+
+    public TaskResponse updateTaskColumn(Long taskId, TaskStatusAndColumnName column) {
+        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task",taskId.toString()));
+        task.setStatus(column);
+        switchTaskColumn(column,task);
+        return TaskMapper.toDto(task);
+    }
+
 
     private void addTaskToOrCreateColumnIfNotExist(CreateTaskRequest request, Task task, Board board) {
         BoardColumn column = boardColumnRepository.findByName(request.getStatus()).orElse(null);
@@ -79,29 +134,8 @@ public class TaskService {
         });
     }
 
-    @Transactional
-    public TaskResponse updateTask(EditTaskRequest request, Long taskId) {
-        var dbTask = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
-        dbTask.setTitle(request.getTitle());
-        dbTask.setDescription(request.getDescription());
-        dbTask.setStatus(request.getStatus());
-
-        addAndRemoveSubtasks(request.getSubtasks(), dbTask);
-        switchTaskColumn(request.getStatus(), dbTask);
-
-        var task = taskRepository.save(dbTask);
-        return TaskMapper.toDto(task);
-    }
-
-    @Transactional
-    public void updateTaskColumn(@Valid EditTaskColumnRequest request, Long taskId) {
-        var task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task",taskId.toString()));
-        task.setStatus(request.getStatus());
-        switchTaskColumn(request.getStatus(),task);
-
-    }
-
     public void deleteTask(Long taskId){
+        taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task", taskId.toString()));
         taskRepository.deleteById(taskId);
     }
 
@@ -136,8 +170,6 @@ public class TaskService {
         }
     }
 
-    public TaskResponse getTaskById(Long taskId) {
-        var task = taskRepository.findById(taskId).orElseThrow();
-        return TaskMapper.toDto(task);
-    }
+
+
 }

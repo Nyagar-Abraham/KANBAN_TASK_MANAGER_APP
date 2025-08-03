@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.controller;
+package org.abraham.kanbantaskmanager.restcontroller;
 
 
 import jakarta.validation.Valid;

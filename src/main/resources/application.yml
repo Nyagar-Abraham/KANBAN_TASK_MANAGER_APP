@@ -1,5 +1,8 @@
 spring:
-#  kafka:
+  graphql:
+    graphiql:
+      enabled: true
+  #  kafka:
 #    consumer:
 #      auto-offset-reset: earliest
   application:

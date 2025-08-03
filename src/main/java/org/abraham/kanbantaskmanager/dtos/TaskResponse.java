@@ -12,5 +12,5 @@ public class TaskResponse {
     private String title;
     private String description;
     private TaskStatusAndColumnName status;
-    private Set<SubTaskResponse> subTasks = new HashSet<>();
+    private Set<SubTaskResponse> subtasks = new HashSet<>();
 }

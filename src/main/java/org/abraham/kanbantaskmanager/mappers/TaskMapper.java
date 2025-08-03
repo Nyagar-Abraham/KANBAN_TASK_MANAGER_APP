@@ -12,7 +12,7 @@ public class TaskMapper {
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
         dto.setStatus(task.getStatus());
-        dto.setSubTasks(task.getSubTasks().stream().map(SubTaskMapper::toDto).collect(Collectors.toSet()));
+        dto.setSubtasks(task.getSubTasks().stream().map(SubTaskMapper::toDto).collect(Collectors.toSet()));
         return dto;
     }
 }
