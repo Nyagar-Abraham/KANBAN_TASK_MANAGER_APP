@@ -1,0 +1,79 @@
+query getAllTasks{
+    getAllTasks{
+        id
+        title
+        description
+        status
+        subtasks{
+            id
+            title
+            isCompleted
+        }
+    }
+}
+
+query getTaskById($task_id: ID!){
+    getTaskById(task_id: $task_id){
+        id
+        title
+        description
+        status
+        subtasks{
+            id
+            title
+            isCompleted
+        }
+    }
+}
+
+mutation createTask($task:CreateTaskRequest!){
+    createTask(task: $task ){
+        id
+        title
+        description
+        status
+        subtasks{
+            id
+            title
+            isCompleted
+        }
+    }
+}
+
+mutation updateTaskTitle($task_id:ID!,$title:String!){
+    updateTaskTitle(task_id:$task_id ,title: $title){
+        id
+        title
+    }
+}
+
+mutation updateTaskDescription($task_id:ID!,$description:String!){
+    updateTaskDescription(task_id: $task_id,description: $description){
+        id
+        description
+    }
+}
+
+mutation updateTaskColumn($task_id:ID!,$column:TaskStatusAndColumnName!){
+    updateTaskColumn(task_id: $task_id,column: $column  ){
+        id
+        status
+    }
+}
+
+mutation updateTaskSubtasks($task_id:ID!,$subtasks:[String!]!){
+    updateTaskSubtasks(task_id: $task_id, subtasks: $subtasks){
+        id
+        subtasks{
+            id
+            title
+        }
+    }
+}
+
+mutation toggleSubtaskStatus($subtask_id:ID!){
+    toggleSubtaskStatus(subtask_id: $subtask_id){
+        id
+        isCompleted
+    }
+}

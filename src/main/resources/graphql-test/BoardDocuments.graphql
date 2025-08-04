@@ -1,0 +1,57 @@
+query getAllBoards{
+    getAllBoards {
+        id
+        name
+        columns {
+            id
+            name
+        }
+    }
+}
+
+query getBoardById($board_id: ID!){
+    getBoardById(board_id: $board_id){
+        id
+        name
+        columns {
+            id
+            name
+        }
+    }
+}
+
+
+
+mutation createBoard($board:CreateBoardRequest!){
+    createBoard(board: $board){
+        id
+        name
+        columns{
+            id
+            name
+        }
+    }
+}
+
+mutation updateBoardName($board_id:ID!,$name: String!){
+    updateBoardName(board_id: $board_id,name: $name){
+        id
+        name
+    }
+}
+
+mutation updateBoardColumns($board_id:ID!,$columns:[TaskStatusAndColumnName!]!){
+    updateBoardColumns(board_id: $board_id,columns: $columns){
+        id
+        columns{
+            id
+            name
+        }
+    }
+}
+
+
+mutation deleteBoardById($board_id:ID!){
+    deleteBoardById(board_id: $board_id)
+}
+

@@ -66,9 +66,9 @@ public class TaskResourceTest {
                 .convertTo(InstanceOfAssertFactories.type(TaskResponse.class))
                 .satisfies(taskResponse -> {
                     assertThat(taskResponse.getId()).isNotNull();
-                    assertThat(taskResponse.getSubTasks()).hasSize(size);
+                    assertThat(taskResponse.getSubtasks()).hasSize(size);
                     assertThat(taskResponse.getStatus()).isEqualTo(status);
-                    taskResponse.getSubTasks().forEach(task -> {
+                    taskResponse.getSubtasks().forEach(task -> {
                         assertThat(task.getId()).isNotNull();
                         assertThat(task.getTitle()).isNotNull();
                         assertThat(task.getIsCompleted()).isFalse();
