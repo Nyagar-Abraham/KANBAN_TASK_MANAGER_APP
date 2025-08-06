@@ -1,8 +1,8 @@
 package org.abraham.kanbantaskmanager.graphql;
 
 
-import org.abraham.kanbantaskmanager.dtos.BoardResponse;
-import org.abraham.kanbantaskmanager.dtos.CreateBoardRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.BoardResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.CreateBoardRequest;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

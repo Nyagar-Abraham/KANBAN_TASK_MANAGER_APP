@@ -1,8 +1,8 @@
 package org.abraham.kanbantaskmanager.graphql;
 
-import org.abraham.kanbantaskmanager.dtos.CreateTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.SubTaskResponse;
-import org.abraham.kanbantaskmanager.dtos.TaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.CreateTaskRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.SubTaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.TaskResponse;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.dtos;
+package org.abraham.kanbantaskmanager.dtos.RestDtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

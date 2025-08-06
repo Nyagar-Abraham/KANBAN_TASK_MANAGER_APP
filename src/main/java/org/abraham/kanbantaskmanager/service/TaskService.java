@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abraham.kanbantaskmanager.Exceptions.EntityNotFoundException;
-import org.abraham.kanbantaskmanager.dtos.*;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.*;
 import org.abraham.kanbantaskmanager.entities.*;
 import org.abraham.kanbantaskmanager.mappers.SubTaskMapper;
 import org.abraham.kanbantaskmanager.mappers.TaskMapper;
@@ -13,6 +13,8 @@ import org.abraham.kanbantaskmanager.repository.BoardColumnRepository;
 import org.abraham.kanbantaskmanager.repository.BoardRepository;
 import org.abraham.kanbantaskmanager.repository.SubTaskRepository;
 import org.abraham.kanbantaskmanager.repository.TaskRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -38,6 +40,10 @@ public class TaskService {
 
     public List<TaskResponse> getTasks() {
         return taskRepository.findAll().stream().map(TaskMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<TaskResponse> getTasksByBoardAndBoardColumnId(Long boardId, Long columnId) {
+        return taskRepository.findByBoardIdAndBoardColumnId(boardId, columnId).stream().map(TaskMapper::toDto).collect(Collectors.toList());
     }
 
     public TaskResponse getTaskById(Long taskId) {
@@ -171,5 +177,7 @@ public class TaskService {
     }
 
 
-
+    public int getSubtaskCount(Long id) {
+        return subTaskRepository.countByTaskId(id);
+    }
 }

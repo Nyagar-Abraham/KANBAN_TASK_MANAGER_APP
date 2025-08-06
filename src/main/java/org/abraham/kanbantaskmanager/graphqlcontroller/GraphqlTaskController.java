@@ -1,13 +1,14 @@
 package org.abraham.kanbantaskmanager.graphqlcontroller;
 
-import org.abraham.kanbantaskmanager.dtos.CreateTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.SubTaskResponse;
-import org.abraham.kanbantaskmanager.dtos.TaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.CreateTaskRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.SubTaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.TaskResponse;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 import org.abraham.kanbantaskmanager.service.TaskService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -25,6 +26,17 @@ public class GraphqlTaskController {
     @QueryMapping
     public List<TaskResponse> getAllTasks() {
         return taskService.getTasks();
+    }
+
+
+    @QueryMapping
+    public List<TaskResponse> getTasksByColumnIdAndBoardId(@Argument(name = "column_id") String columnId, @Argument(name = "board_id") String boardId) {
+        return taskService.getTasksByBoardAndBoardColumnId(Long.parseLong(boardId),Long.parseLong(columnId));
+    }
+
+    @SchemaMapping(typeName = "TaskResponse", field = "subtaskCount")
+    public int getSubtaskCount(TaskResponse taskResponse) {
+       return taskService.getSubtaskCount(taskResponse.getId());
     }
 
     @QueryMapping

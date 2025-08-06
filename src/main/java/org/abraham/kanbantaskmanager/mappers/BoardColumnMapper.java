@@ -1,6 +1,7 @@
 package org.abraham.kanbantaskmanager.mappers;
 
-import org.abraham.kanbantaskmanager.dtos.BoardColumnResponse;
+
+import org.abraham.kanbantaskmanager.dtos.GraphqlDtos.BoardColumnResponse;
 import org.abraham.kanbantaskmanager.entities.BoardColumn;
 
 public class BoardColumnMapper {

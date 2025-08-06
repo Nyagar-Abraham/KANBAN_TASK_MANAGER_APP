@@ -1,14 +1,13 @@
 package org.abraham.kanbantaskmanager.service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abraham.kanbantaskmanager.Exceptions.DuplicateNameException;
 import org.abraham.kanbantaskmanager.Exceptions.EntityNotFoundException;
-import org.abraham.kanbantaskmanager.dtos.CreateBoardRequest;
-import org.abraham.kanbantaskmanager.dtos.BoardResponse;
-import org.abraham.kanbantaskmanager.dtos.EditBoardRequest;
+import org.abraham.kanbantaskmanager.dtos.GraphqlDtos.BoardResponse;
+import org.abraham.kanbantaskmanager.dtos.GraphqlDtos.CreateBoardRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.EditBoardRequest;
 import org.abraham.kanbantaskmanager.entities.Board;
 import org.abraham.kanbantaskmanager.entities.BoardColumn;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;

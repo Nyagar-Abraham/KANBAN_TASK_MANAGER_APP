@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.dtos;
+package org.abraham.kanbantaskmanager.dtos.GraphqlDtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

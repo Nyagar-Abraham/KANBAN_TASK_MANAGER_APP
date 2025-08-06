@@ -2,9 +2,9 @@ package org.abraham.kanbantaskmanager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.abraham.kanbantaskmanager.dtos.BoardResponse;
-import org.abraham.kanbantaskmanager.dtos.CreateBoardRequest;
-import org.abraham.kanbantaskmanager.dtos.EditBoardRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.BoardResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.CreateBoardRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.EditBoardRequest;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;

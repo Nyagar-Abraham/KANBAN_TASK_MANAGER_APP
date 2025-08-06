@@ -1,11 +1,7 @@
-package org.abraham.kanbantaskmanager.dtos;
+package org.abraham.kanbantaskmanager.dtos.RestDtos;
 
 import lombok.Data;
-import org.abraham.kanbantaskmanager.entities.BoardColumn;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class BoardColumnResponse {

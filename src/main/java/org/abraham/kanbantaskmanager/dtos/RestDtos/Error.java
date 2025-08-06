@@ -1,4 +1,4 @@
-package org.abraham.kanbantaskmanager.dtos;
+package org.abraham.kanbantaskmanager.dtos.RestDtos;
 
 import lombok.Data;
 

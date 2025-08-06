@@ -1,6 +1,7 @@
 package org.abraham.kanbantaskmanager.mappers;
 
-import org.abraham.kanbantaskmanager.dtos.BoardResponse;
+
+import org.abraham.kanbantaskmanager.dtos.GraphqlDtos.BoardResponse;
 import org.abraham.kanbantaskmanager.entities.Board;
 
 import java.util.stream.Collectors;

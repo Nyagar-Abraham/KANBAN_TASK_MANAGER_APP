@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubTaskRepository extends JpaRepository<SubTask, Long> {
 
+    int countByTaskId(Long id);
 }

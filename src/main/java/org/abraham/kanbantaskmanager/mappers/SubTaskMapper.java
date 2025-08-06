@@ -1,7 +1,7 @@
 package org.abraham.kanbantaskmanager.mappers;
 
 
-import org.abraham.kanbantaskmanager.dtos.SubTaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.SubTaskResponse;
 import org.abraham.kanbantaskmanager.entities.SubTask;
 
 public class SubTaskMapper {

@@ -1,6 +1,6 @@
 package org.abraham.kanbantaskmanager.mappers;
 
-import org.abraham.kanbantaskmanager.dtos.TaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.TaskResponse;
 import org.abraham.kanbantaskmanager.entities.Task;
 
 import java.util.stream.Collectors;

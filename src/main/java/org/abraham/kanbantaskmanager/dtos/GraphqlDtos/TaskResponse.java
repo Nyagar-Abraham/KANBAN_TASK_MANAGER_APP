@@ -1,10 +1,7 @@
-package org.abraham.kanbantaskmanager.dtos;
+package org.abraham.kanbantaskmanager.dtos.GraphqlDtos;
 
 import lombok.Data;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 public class TaskResponse {
@@ -12,5 +9,4 @@ public class TaskResponse {
     private String title;
     private String description;
     private TaskStatusAndColumnName status;
-    private Set<SubTaskResponse> subtasks = new HashSet<>();
 }

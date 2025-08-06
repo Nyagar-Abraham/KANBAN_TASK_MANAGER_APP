@@ -3,10 +3,10 @@ package org.abraham.kanbantaskmanager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.abraham.kanbantaskmanager.dtos.CreateTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.EditTaskColumnRequest;
-import org.abraham.kanbantaskmanager.dtos.EditTaskRequest;
-import org.abraham.kanbantaskmanager.dtos.TaskResponse;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.CreateTaskRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.EditTaskColumnRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.EditTaskRequest;
+import org.abraham.kanbantaskmanager.dtos.RestDtos.TaskResponse;
 import org.abraham.kanbantaskmanager.entities.TaskStatusAndColumnName;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;

@@ -4,6 +4,7 @@ type Query{
 
     getAllTasks:[TaskResponse!]!
     getTaskById(task_id:ID!):TaskResponse!
+    getTasksByColumnIdAndBoardId(column_id:ID!,board_id:ID!):[TaskResponse!]!
 }
 
 type Mutation{
@@ -40,17 +41,19 @@ enum TaskStatusAndColumnName{
     DONE
 }
 
-type BoardResponse{
+type SubTaskResponse{
     id:ID!
-    name:String!
-    columns:[BoardColumnResponse]
+    title:String!
+    isCompleted:Boolean!
 }
 
-type BoardColumnResponse{
-    id: ID!
-    name: String!
-}
 
+
+#type BoardResponse{
+#    id:ID!
+#    name:String!
+##    columns:[BoardColumnResponse]
+#}
 
 type TaskResponse{
     id: ID!
@@ -58,13 +61,34 @@ type TaskResponse{
     description:String
     status:TaskStatusAndColumnName!
     subtasks:[SubTaskResponse!]!
+    subtaskCount:Int!
 }
 
-type SubTaskResponse{
-    id:ID!
-    title:String!
-    isCompleted:Boolean!
+type BoardColumnResponse{
+    id: ID!
+    name: String!
+    taskCount: Int!
 }
+
+#REST
+type BoardResponse{
+    id:ID!
+    name:String!
+    columns:[BoardColumnResponse!]!
+}
+
+
+
+
+#type TaskResponse{
+#    id: ID!
+#    title: String!
+#    description:String
+#    status:TaskStatusAndColumnName!
+#    subtasks:[SubTaskResponse!]!
+#}
+
+
 
 
 
