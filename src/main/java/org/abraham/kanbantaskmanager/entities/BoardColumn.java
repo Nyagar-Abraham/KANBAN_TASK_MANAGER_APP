@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +22,21 @@ public class BoardColumn {
     @Enumerated(EnumType.STRING)
     private TaskStatusAndColumnName name;
 
+    @Column(name = "position",insertable = false)
+    private Integer position;
+
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "task_limit")
+    private Integer taskLimit;
+
+    @Column(name = "created_at",insertable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "boardColumn", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Task> tasks = new HashSet<>();
 
@@ -31,5 +48,11 @@ public class BoardColumn {
     public void removeTask(Task task) {
         tasks.remove(task);
         task.setBoardColumn(null);
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null)
+            createdAt = LocalDateTime.now();
     }
 }

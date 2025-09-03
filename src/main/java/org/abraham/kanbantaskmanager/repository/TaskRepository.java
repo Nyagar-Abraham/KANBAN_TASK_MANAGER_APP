@@ -16,7 +16,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Optional<Task> findByTitleAndBoardId(String title, Long id);
 
 
-    List<Task> findByBoardIdAndBoardColumnId(Long boardId, Long columnId);
+    List<Task> findByBoardIdAndBoardColumnIdOrderByPosition(Long boardId, Long columnId);
 
     int countByBoardColumnId(Long columnId);
 }

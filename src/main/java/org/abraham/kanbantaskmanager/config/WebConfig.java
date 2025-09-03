@@ -13,6 +13,10 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/*")
+                        .allowedOrigins("https://studio.apollographql.com/")
+                        .allowedMethods("*");
+
                 registry.addMapping("/graphql")
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("POST", "OPTIONS")

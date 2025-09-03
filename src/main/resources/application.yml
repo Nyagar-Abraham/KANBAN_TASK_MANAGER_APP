@@ -1,22 +1,29 @@
 spring:
+  kafka:
+    bootstrap-servers: localhost:8081
+    consumer:
+      group-id: user_event_group_1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      auto-offset-reset: earliest
+#      properties:
+#        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+#        spring.json.trusted.packages: "*"
+#        spring.json.value.default.type: org.abraham.kanbantaskmanager.dtos
+#        spring.json.use.type.headers: false
   graphql:
     graphiql:
       enabled: true
-  #  kafka:
-#    consumer:
-#      auto-offset-reset: earliest
+
   application:
     name: kanban-task-manager
   datasource:
-    url: jdbc:postgresql://localhost:5432/kanbandb
-    password: pass747word
-    username: kanbanuser
-
-
-  #  datasource:
-#    url: ${POSTGRES_URL}
-#    password: ${POSTGRES_PASSWORD}
-#    username: ${POSTGRES_PASSWORD}
+    url:  jdbc:postgresql://localhost:5434/kanban_db
+    password: secret123
+    username: postgres
+  #    url: ${SPRING_POSTGRES_URL}
+#    password: ${SPRING_POSTGRES_PASSWORD}
+#    username: ${SPRING_POSTGRES_USER}
   jpa:
     hibernate:
       ddl-auto: none
@@ -26,8 +33,3 @@ spring:
     show-sql: true
 server:
   port: 8085
-
-
-
-
-

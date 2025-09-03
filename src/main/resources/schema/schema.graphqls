@@ -1,0 +1,282 @@
+scalar LocalDateTime
+scalar Date
+
+type Query{
+    getBoards:[BoardResponse!]!
+    getBoardById(id:ID!):BoardResponse!
+
+    getTasks:[TaskResponse!]!
+    getTaskById(id:ID!):TaskResponse!
+    getTasksByColumnIdAndBoardId(columnId:ID!,boardId:ID!):[TaskResponse!]!
+}
+
+type Mutation{
+    createBoard(board:CreateBoardRequest!):CreateBoardResponse!
+    updateBoardName(id:ID!,name: String!):BoardResponse!
+    updateBoardColumns(id:ID!,columns:[TaskStatusAndColumnName!]!):BoardResponse!
+    updateBoard(id:ID!,input: UpdateBoardInput!):UpdateBoardResponse!
+    updateBoardColumnPosition(input: UpdateColumnPositionInput!):UpdateColumnPositionResponse!
+    deleteBoardById(id:ID!): DeleteBoardResponse!
+
+    createTask(task:CreateTaskRequest!):CreateTaskResponse!
+    updateTask(id:ID!, input:UpdateTaskInput!): UpdateTaskResponse!
+    updateTaskTitle(id:ID!,title:String!):TaskResponse!
+    updateTaskDescription(id:ID!,description:String!):TaskResponse!
+    updateTaskColumn(taskId:ID!,columnId:ID!):TaskResponse!
+    updateTaskSubtasks(id:ID!,subtasks:[String!]!):TaskResponse!
+    toggleSubtaskStatus(id:ID!):SubTaskResponse!
+    updateTaskPosition(input:UpdateTaskPositionInput! ): UpdateTaskPositionResponse!
+    deleteTaskById(id:ID!):DeleteTaskResponse!
+}
+
+input CreateBoardRequest{
+    name:String!
+    description: String!
+    columns:[TaskStatusAndColumnName]
+    createdBy: Int!
+    color:  String!
+}
+
+input UpdateSubtaskRequest{
+    title: String
+    description: String
+    dueDate: Date
+    assignedTo: Int
+}
+
+input UpdateBoardInput{
+    name:String
+    description: String
+    columns:[TaskStatusAndColumnName]
+    color: String
+}
+
+input UpdateTaskPositionInput{
+    sourceId: Int!
+    destinationId: Int!
+    sourcePosition: Int!
+    destinationPosition: Int!
+}
+
+input UpdateColumnPositionInput{
+    sourceId: Int!
+    destinationId: Int!
+    sourcePosition: Int!
+    destinationPosition: Int!
+}
+
+
+input CreateSubtaskRequest{
+    title: String!
+    description: String
+    dueDate: Date
+    assignedTo: Int
+}
+
+interface Response {
+    code: Int!
+    success: Boolean!
+    message: String!
+}
+
+type UpdateBoardResponse{
+    code: Int!
+    success: Boolean!
+    message: String!
+    board: BoardResponse!
+}
+
+type UpdateColumnPositionResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+}
+
+type UpdateTaskPositionResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+}
+
+type DeleteBoardResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+    boardId: Int!
+}
+
+type DeleteTaskResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+    taskId: Int!
+}
+
+type UpdateTaskResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+    task: TaskResponse!
+}
+
+
+type CreateBoardResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+    board: BoardResponse
+}
+
+type CreateTaskResponse implements Response{
+    code: Int!
+    success: Boolean!
+    message: String!
+    task: TaskResponse
+}
+
+type BoardResponse{
+    id:ID!
+    name:String!
+    description: String
+    columns:[BoardColumnResponse!]!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+    CreatedBy: UserResponse!
+    isActive: Boolean!
+    color: String
+    members:[BoardMemberResponse!]!
+}
+
+
+#private String title;
+#private String description;
+#private Date dueDate;
+#private String assignedTo;
+
+input CreateTaskRequest{
+    boardId:ID!
+    createdBy: Int!
+    title:String!
+    description:String
+    status:TaskStatusAndColumnName!
+    priority: TaskPriority!
+    dueDate: Date
+    assignedTo: Int!
+    estimatedHours: Int
+    tags: [String!]!
+    subtasks: [CreateSubtaskRequest!]!
+}
+
+input UpdateTaskInput{
+    title:String
+    description:String
+    status:TaskStatusAndColumnName
+    priority: TaskPriority
+    dueDate: Date
+    assignedTo: Int
+    estimatedHours: Int
+    tags: [String]
+    subtasks: [CreateSubtaskRequest]
+}
+
+enum TaskStatusAndColumnName{
+    TODO
+    DOING
+    DONE
+}
+
+type UserResponse {
+    id : ID!
+    username: String!
+    email: String!
+}
+
+enum BoardMemberRoles {
+    CREATOR
+    EDITOR
+}
+
+type BoardMemberResponse{
+    id: ID!
+    board: Int!
+    user: UserResponse!
+    role: BoardMemberRoles!
+    joinedAt: LocalDateTime!
+    isActive: Boolean!
+}
+
+type SubTaskResponse{
+    id:ID!
+    title:String!
+    description: String
+    isCompleted:Boolean!
+    position: Int!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+    assignedTo: UserResponse
+}
+
+
+enum TaskPriority{
+    HIGH
+    MEDIUM
+    LOW
+}
+
+
+
+
+type TaskResponse{
+    id: ID!
+    title: String!
+    description:String
+    status:TaskStatusAndColumnName!
+    position: Int!
+    priority: TaskPriority!
+    dueDate: Date
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+    assignedTo: UserResponse
+    createdBy: UserResponse!
+    tags:String
+    estimatedHours: Int
+    attachmentUrl: String
+    subtasks:[SubTaskResponse!]!
+}
+
+type BoardColumnResponse{
+    id: ID!
+    name: String!
+    position: Int!
+    color: String
+    taskLimit:Int
+    createdAt:LocalDateTime!
+    updatedAt:LocalDateTime
+    taskCount: Int!
+}
+
+type TaskCommentResponse {
+    id: ID!
+    content: String
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+    task: Int!
+    user: UserResponse!
+}
+
+type TaskAttachments {
+    id: ID!
+    task: Int
+    filename: String!
+    fileUrl: String!
+    fileSize: Int!
+    fileType: String!
+    uploadedBy: UserResponse!
+}
+
+
+
+
+
+
+

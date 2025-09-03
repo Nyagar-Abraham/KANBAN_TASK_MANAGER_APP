@@ -1,21 +1,23 @@
 package org.abraham.kanbantaskmanager.mappers;
 
 
-import org.abraham.kanbantaskmanager.dtos.GraphqlDtos.BoardResponse;
+import org.abraham.kanbantaskmanager.dtos.BoardResponse;
 import org.abraham.kanbantaskmanager.entities.Board;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-import java.util.stream.Collectors;
 
-public class BoardMapper {
+@Mapper(
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        uses = {BoardColumnMapper.class, UserMapper.class},
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
+public interface BoardMapper {
 
-    public static BoardResponse toDto(Board board) {
-        BoardResponse response = new BoardResponse();
-        response.setName(board.getName());
-        response.setId(board.getId());
-        var columns = board.getColumns()
-                .stream().map(BoardColumnMapper::toDto)
-                .collect(Collectors.toSet());
-        response.setColumns(columns);
-        return response;
-    }
+//    @Mapping(source = "columns", target = "columns")
+//    @Mapping()
+    BoardResponse boardToBoardResponse(Board board);
+
 }
